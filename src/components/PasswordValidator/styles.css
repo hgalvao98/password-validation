@@ -1,0 +1,25 @@
+.password-validator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.error-item {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.error-icon {
+  font-size: 20px;
+  margin-right: 5px;
+}
