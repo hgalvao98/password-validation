@@ -3,7 +3,7 @@ import PasswordValidator from "./components/PasswordValidator";
 
 const App = () => {
   const customMessages = {
-    specialChar: "Has a special character !@#$%^&*",
+    specialChar: "(Different) Has a special character !@#$%^&*",
     digit: "Has a number 0-9",
     uppercase: "Has uppercase Letter",
     noConsecutiveLetters: "No consecutive letters allowed!",
@@ -14,8 +14,10 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Password Validator</h1>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <h1>Password Component</h1>
       <PasswordValidator
         options={["specialChar", "digit", "uppercase", "noConsecutiveLetters"]}
         customMessages={customMessages}
