@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -11,56 +11,58 @@ const initialMessages = {
   digit: "Has a number 0-9",
   uppercase: "Has uppercase Letter",
   noConsecutiveLetters: "No consecutive letters allowed!",
+  minLength: "Has minimum length of 8 characters",
 };
 
 const PasswordValidator = ({
+  setIsVerified,
+  password = "",
   options,
   customStyles,
   customMessages = initialMessages,
 }) => {
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [isVerified, setIsVerifiedInternal] = useState(false);
 
-  useEffect(() => {
-    validatePassword();
-  }, [password]);
+  const validatePassword = useCallback(() => {
+    const newErrors = {};
+    let isValid = true;
 
-  const validatePassword = () => {
-    const newErrors = {
-      specialChar: false,
-      digit: false,
-      uppercase: false,
-      noConsecutiveLetters: false,
-    };
-
-    if (options.includes("specialChar") && !/[!@#$%^&*]/.test(password)) {
-      newErrors.specialChar = true;
+    if (options.includes("specialChar")) {
+      newErrors.specialChar = !/[!@#$%^&*]/.test(password);
+      isValid = isValid && !newErrors.specialChar;
     }
-    if (options.includes("digit") && !/\d/.test(password)) {
-      newErrors.digit = true;
+    if (options.includes("digit")) {
+      newErrors.digit = !/[0-9]/.test(password);
+      isValid = isValid && !newErrors.digit;
     }
-    if (options.includes("uppercase") && !/[A-Z]/.test(password)) {
-      newErrors.uppercase = true;
+    if (options.includes("uppercase")) {
+      newErrors.uppercase = !/[A-Z]/.test(password);
+      isValid = isValid && !newErrors.uppercase;
     }
-    if (
-      options.includes("noConsecutiveLetters") &&
-      /(.)\1{1,}/.test(password)
-    ) {
-      newErrors.noConsecutiveLetters = true;
+    if (options.includes("noConsecutiveLetters")) {
+      newErrors.noConsecutiveLetters = /([a-z])\1/.test(password);
+      isValid = isValid && !newErrors.noConsecutiveLetters;
+    }
+    if (options.includes("minLength")) {
+      newErrors.minLength = password.length < 8;
+      isValid = isValid && !newErrors.minLength;
     }
 
     setErrors(newErrors);
-  };
+    setIsVerifiedInternal(isValid);
+  }, [password, options]);
+
+  useEffect(() => {
+    validatePassword();
+  }, [validatePassword]);
+
+  useEffect(() => {
+    setIsVerified(isVerified);
+  }, [isVerified, setIsVerified]);
 
   return (
     <div className="password-validator" style={customStyles.container}>
-      <input
-        type="password"
-        placeholder="Enter your password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={customStyles.input}
-      />
       <ul className="error-list" style={customStyles.errorList}>
         {Object.entries(errors).map(([key, value]) => {
           return (
