@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Henrique Galvão",
+  "repository": "https://github.com/hgalvao98/password-validation",
   "license": "ISC",
   "peerDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
