@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
+
 import "./styles.css";
+import ErrorIcon from "./icons/ErrorIcon";
+import RightIcon from "./icons/RightIcon";
 
 const initialMessages = {
   specialChar: "Has a special character !@#$%^&*",
@@ -76,20 +74,12 @@ const PasswordValidator = ({
             <li key={key} style={customStyles.errorItem}>
               {value ? (
                 <span className="error-item">
-                  <FontAwesomeIcon
-                    icon={faTimesCircle}
-                    color="red"
-                    style={{ fontSize: "30px" }}
-                  />
+                  <ErrorIcon />
                   {customMessages[key]}
                 </span>
               ) : (
                 <span className="error-item">
-                  <FontAwesomeIcon
-                    icon={faCheckCircle}
-                    color="green"
-                    style={{ fontSize: "30px" }}
-                  />
+                  <RightIcon />
                   {customMessages[key]}
                 </span>
               )}
