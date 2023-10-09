@@ -25,7 +25,7 @@ Feel free to visit: https://www.npmjs.com/package/react-textfield-validator
 To integrate the `PasswordValidator` component into your application, you can simply add it to your JSX. Here's a basic example:
 
 ```jsx
-import React from 'react';
+import React, {useState} from 'react';
 import PasswordValidator from 'react-textfield-validator';
 
 const App = () => {
