@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PasswordValidator from "./components/PasswordValidator";
 
 const App = () => {
   const [password, setPassword] = useState();
