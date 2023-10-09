@@ -14,11 +14,18 @@ const initialMessages = {
   minLength: "Has minimum length of 8 characters",
 };
 
+const initialStyles = {
+  container: {},
+  input: {},
+  errorList: {},
+  errorItem: {},
+};
+
 const PasswordValidator = ({
   setIsVerified,
   password = "",
   options,
-  customStyles,
+  customStyles = initialStyles,
   customMessages = initialMessages,
 }) => {
   const [errors, setErrors] = useState({});
