@@ -100,6 +100,13 @@ The **PasswordValidator** component is highly customizable. You can modify error
 ## Contributing
 Contributions are welcome! If you have suggestions, improvements, or bug fixes, please open an issue or submit a pull request on the GitHub repository.
 
+## Assumptions
+
+In this password validator, I decided to add a requirment not letting the user to type two consecutive characters. Also, I added another requirement that is the minimum length. Altough this can be achieved through the default input HTML tag, using the validator to check that keeps the app concise.
+
+**Future** 
+For the future, I suggest implementing other requirements the client/user might want, such as maximum length, can't contain DOB or username in the password.
+
 ## License
 This project is licensed under the MIT License.
 
