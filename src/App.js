@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PasswordValidator from "react-textfield-validator";
+
 const App = () => {
   const [password, setPassword] = useState();
   const [isVerified, setIsVerified] = useState(false);
