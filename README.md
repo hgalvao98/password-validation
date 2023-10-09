@@ -85,9 +85,9 @@ The **PasswordValidator** component accepts the following props:
   - `customStyles`(object, optional): An object that lets you customize the component's CSS styles using inline styles. You can apply custom styles to different parts of the component, such as the container, input field, error list, error items, error icons, and valid icons.
   - `customMessages`(object, optional): An object that allows you to customize error messages for each requirement. If not provided, default messages will be displayed. You can customize messages for any of the options specified in the options prop.
 
-## Testing
+## Testing (in development)
 
-The easier way to test the **PasswordValidator** in your application is to follow step number 2 of the installation. You can also clone this repo and follow these steps:
+The easiest way to test the **PasswordValidator** in your application is to follow step number 2 of the installation. You can also clone this repo and follow these steps:
 
 ```
 npm install
