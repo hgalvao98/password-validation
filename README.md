@@ -63,8 +63,6 @@ const App = () => {
           input: { /* Custom input field styles */ },
           errorList: { /* Custom error list styles */ },
           errorItem: { /* Custom error item styles */ },
-          errorIcon: { /* Custom error icon styles */ },
-          validIcon: { /* Custom valid icon styles */ },
         }}
       />
     </div>
