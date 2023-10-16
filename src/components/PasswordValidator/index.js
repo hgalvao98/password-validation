@@ -5,11 +5,12 @@ import ErrorIcon from "./icons/ErrorIcon";
 import RightIcon from "./icons/RightIcon";
 
 const initialMessages = {
+  differentFromUser: "Password can't contain username/email on it",
   specialChar: "Has a special character !@#$%^&*",
   digit: "Has a number 0-9",
   uppercase: "Has uppercase Letter",
   noConsecutiveLetters: "No consecutive letters allowed!",
-  minLength: "Has minimum length of 8 characters",
+  minLength: "Too short!",
 };
 
 const initialStyles = {
@@ -19,20 +20,59 @@ const initialStyles = {
   errorItem: {},
 };
 
+//check if customMessages being passed match with options/initialMessages
+const getMessages = (options, customMessages) => {
+  let messages = { ...initialMessages };
+  if (options.length > Object.entries(customMessages).length) {
+    for (let i = 0; i < options.length; i++) {
+      if (
+        customMessages[options[i]] === "" ||
+        customMessages[options[i]] === undefined
+      ) {
+        messages[options[i]] = initialMessages[options[i]];
+      }
+    }
+  } else {
+    messages = customMessages;
+  }
+  return messages;
+};
+
 const PasswordValidator = ({
   setIsVerified,
+  username = "",
   password = "",
   options,
   customStyles = initialStyles,
-  customMessages = initialMessages,
+  customMessages = { ...initialMessages },
 }) => {
   const [errors, setErrors] = useState({});
   const [isVerified, setIsVerifiedInternal] = useState(false);
+  const [minRequired, setMinRequired] = useState();
+
+  const messages = getMessages(options, customMessages);
+
+  const containsMinLength = useCallback(() => {
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].minLength !== undefined) {
+        setMinRequired(options[i].minLength);
+        return true;
+      }
+    }
+  }, [options]);
 
   const validatePassword = useCallback(() => {
     const newErrors = {};
     let isValid = true;
 
+    if (options.includes("differentFromUser")) {
+      let user = username.toLowerCase();
+      if (username.includes("@")) {
+        user = user.split("@")[0];
+      }
+      newErrors.differentFromUser = password.toLowerCase().includes(user);
+      isValid = isValid && !newErrors.differentFromUser;
+    }
     if (options.includes("specialChar")) {
       newErrors.specialChar = !/[!@#$%^&*]/.test(password);
       isValid = isValid && !newErrors.specialChar;
@@ -49,8 +89,8 @@ const PasswordValidator = ({
       newErrors.noConsecutiveLetters = /([a-z])\1/.test(password);
       isValid = isValid && !newErrors.noConsecutiveLetters;
     }
-    if (options.includes("minLength")) {
-      newErrors.minLength = password.length < 8;
+    if (containsMinLength()) {
+      newErrors.minLength = password.length < minRequired;
       isValid = isValid && !newErrors.minLength;
     }
 
@@ -75,12 +115,12 @@ const PasswordValidator = ({
               {value ? (
                 <span className="error-item">
                   <ErrorIcon />
-                  {customMessages[key]}
+                  {messages[key]}
                 </span>
               ) : (
                 <span className="error-item">
                   <RightIcon />
-                  {customMessages[key]}
+                  {messages[key]}
                 </span>
               )}
             </li>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PasswordValidator from "./components/PasswordValidator";
 
 const App = () => {
+  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [isVerified, setIsVerified] = useState(false);
 
@@ -31,6 +32,12 @@ const App = () => {
         }}
       >
         <input
+          type="text"
+          placeholder="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
           type="password"
           placeholder="Enter your password"
           value={password}
@@ -38,14 +45,16 @@ const App = () => {
         />
         <button disabled={!isVerified}>Send</button>
         <PasswordValidator
-          setIsVerified={setIsVerified}
+          username={username}
           password={password}
+          setIsVerified={setIsVerified}
           options={[
+            "differentFromUser",
             "specialChar",
             "digit",
             "uppercase",
             "noConsecutiveLetters",
-            "minLength",
+            { minLength: 3 },
           ]}
           customMessages={customMessages}
           customStyles={customStyles}
